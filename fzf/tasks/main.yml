@@ -1,0 +1,50 @@
+---
+# tasks file for fzf
+- name: Install fzf binary
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - fzf
+  become: yes
+  become_method: sudo
+
+- name: Clone fzf repository
+  git:
+    dest: ~/.fzf 
+    repo: https://github.com/junegunn/fzf
+    version: "{{ FZF_VERSION }}"
+
+- name: Source it within zsh/bash
+  lineinfile:
+    path: "{{ local_home }}/{{ item.dest }}"
+    state: present
+    line: "{{ item.line }}"
+  with_items:
+    - { dest: '.zshrc', line: 'source {{ local_home }}/.fzf/shell/completion.zsh' }
+    - { dest: '.zshrc', line: 'source {{ local_home }}/.fzf/shell/key-bindings.zsh' }
+    - { dest: '.bashrc', line: 'source {{ local_home }}/.fzf/shell/completion.bash' }
+    - { dest: '.bashrc', line: 'source {{ local_home }}/.fzf/shell/key-bindings.bash' }
+
+- name: Install bat and fd-find
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - bat
+    - fd 
+  become: yes
+  become_method: sudo
+
+- name: Bat/fd integration within zsh
+  lineinfile:
+    path: "{{ local_home }}/{{ item.dest }}"
+    state: present
+    line: "{{ item.line }}"
+  with_items:
+    - { dest: '.zshrc', line: "bindkey -s \"^O\" \"fd -d 1 -t f | fzf --preview 'bat --color \"always\" {}' --preview-window=right:60%\"" }
+
+# - name: Remove SUFFIX from .zshrc
+#   replace: dest="{{ local_home }}/{{ item.dest }}" regexp="SUFFIX" replace=""
+#   with_items:
+#     - { dest: '.zshrc' }

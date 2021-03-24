@@ -1,0 +1,5 @@
+---
+# vars file for fzf
+FZF_VERSION: 0.26.0
+local_home: "{{ lookup('env', 'HOME') }}"
+local_user: "{{ lookup('env', 'USER') }}"

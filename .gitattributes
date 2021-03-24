@@ -1,0 +1,2 @@
+spotifyd/files/client.yml filter=git-crypt diff=git-crypt
+spotifyd/files/spotifyd.conf filter=git-crypt diff=git-crypt

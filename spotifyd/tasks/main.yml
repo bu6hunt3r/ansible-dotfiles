@@ -1,0 +1,41 @@
+---
+# tasks file for spotifyd
+- name: Install spotifyd
+  package:
+    name: spotifyd
+  become: yes
+  become_method: sudo
+  when: ansible_os_family == "Archlinux"
+
+- name: Install spotify-tui
+  aur:
+    name: spotify-tui
+  become: yes
+  become_user: aur_builder
+  when: ansible_os_family == "Archlinux"
+
+- name: Create spotify config dir
+  file:
+    path: "{{ local_home }}/.config/spotifyd"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+    mode: 0775
+
+- name: Copying  spotifyd configuration file
+  copy:
+    src: spotifyd.conf
+    dest: "{{ local_home }}/.config/spotifyd/spotifyd.conf"
+
+- name: Copying  spotify-tui configuration file
+  copy:
+    src: client.yml
+    dest: "{{ local_home }}/.config/spotify-tui/client.yml"
+
+- name: Copy spotifyd systemd service file (user service)
+  copy:
+      src: "/usr/lib/systemd/user/spotifyd.service"
+      dest: "/{{ local_home }}/.config/systemd/user/spotifyd.service"
+
+- name: Start spotifyd service
+  systemd: state=started name=spotifyd daemon_reload=yes
