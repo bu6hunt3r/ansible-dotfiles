@@ -7,3 +7,4 @@
     - {role: fzf, tags: ['fzf']}
     - {role: git, tags: ['git']}
     - {role: spotifyd, tags: ['spotifyd']}
+    - {role: ranger, tags: ['ranger']}
