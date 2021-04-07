@@ -1,0 +1,4 @@
+---
+# vars file for radare2
+local_home: "{{ lookup('env', 'HOME') }}"
+local_user: "{{ lookup('env', 'USER') }}"

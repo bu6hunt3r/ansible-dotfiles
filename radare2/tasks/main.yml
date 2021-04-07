@@ -1,0 +1,6 @@
+---
+# tasks file for radare2
+- name: Copy radare2rc
+  copy:
+    src: radare2rc
+    dest: "{{ local_home }}/.radare2rc"

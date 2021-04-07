@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include radare2"
+      include_role:
+        name: "radare2"
