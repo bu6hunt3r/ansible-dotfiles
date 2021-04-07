@@ -1,0 +1,37 @@
+---
+# tasks file for tmux
+- name: Install tmux
+  package: 
+    name: tmux
+  become: true
+  become_method: sudo
+
+- name: Install tmux plugin manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm 
+    dest: "{{ local_home }}/.tmux/plugins/tpm"
+
+- name: Install python3 psutil module
+  package:
+    name: python3-psutil
+  become: true
+  become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Create scripts dir
+  ansible.builtin.file:
+    path: "{{ local_home }}/scripts"
+    state: directory
+    mode: '0755'
+
+- name: Copy sysstats script
+  copy:
+    src: "tmux_sysstats.py"
+    dest: "{{ local_home }}/scripts/tmux_sysstats.py"
+    mode: a+x
+ 
+- name: Copy tmux.conf 
+  copy:
+    src: tmux.conf
+    dest: "{{ local_home }}/.tmux.conf"
+ 

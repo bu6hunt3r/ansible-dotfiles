@@ -1,0 +1,24 @@
+---
+# tasks file for ranger
+- name: Install ranger
+  package:
+    name: ranger
+  become_method: sudo
+  become: true
+
+- name: Create ranger config dir
+  file:
+    state: directory
+    path: "{{ local_home }}/.config/ranger"
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Copy commands.py
+  copy:
+    src: commands.py
+    dest: "{{ local_home }}/.config/ranger/commands.py"
+
+- name: Copy rc.conf
+  copy:
+    src: rc.conf
+    dest: "{{ local_home }}/.config/ranger/rc.conf"

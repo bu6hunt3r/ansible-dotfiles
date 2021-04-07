@@ -1,0 +1,86 @@
+# zathurarc-dark
+
+set font                        "inconsolata 9"
+set default-bg                  "#151515" #00
+set default-fg                  "#202020" #01
+
+set statusbar-fg                "#B0B0B0" #04
+set statusbar-bg                "#202020" #01
+
+set inputbar-bg                 "#151515" #00 currently not used
+set inputbar-fg                 "#303030" #02
+
+set notification-error-bg       "#AC4142" #08
+set notification-error-fg       "#151515" #00
+
+set notification-warning-bg     "#AC4142" #08
+set notification-warning-fg     "#151515" #00
+
+set highlight-color             "#F4BF75" #0A
+set highlight-active-color      "#6A9FB5" #0D
+
+set completion-highlight-fg     "#303030" #02
+set completion-highlight-bg     "#75B5AA" #0C
+
+set completion-bg               "#303030" #02
+set completion-fg               "#75B5AA" #0C
+
+set notification-bg             "#90A959" #0B
+set notification-fg             "#151515" #00
+
+set recolor-lightcolor          "#151515" #00
+set recolor-darkcolor           "#E0E0E0" #06
+set recolor                     "true"
+
+# setting recolor-keep true will keep any color your pdf has.
+# if it is false, it'll just be black and white
+set recolor-keephue             "true"
+
+# Rest of your configs go here:
+set zoom-min 05
+" set zoom-step 15
+set scroll-step 150
+set scroll-wrap true
+set incremental-search true
+set statusbar-basename true
+set statusbar-home-tilde true
+set advance-pages-per-row true
+set window-title-basename true
+set window-title-home-tilde true
+set selection-clipboard clipboard
+
+map [normal] w adjust_window width
+map [normal] 0 adjust_window best-fit
+
+map [normal] = zoom in
+map [normal] - zoom out
+map [normal] + zoom reset
+map [normal] ) zoom reset
+
+map [normal] l scroll half-up
+map [normal] h scroll half-down
+
+map [normal] p navigate previous
+map [normal] n navigate next
+map [fullscreen] p navigate previous
+map [fullscreen] n navigate next
+
+map [normal] N search next
+
+map [normal] , navigate previous
+map [normal] . navigate next
+
+map [fullscreen] l scroll half-up
+map [fullscreen] h scroll half-down
+
+map [normal] ; focus_inputbar :
+map [normal] a toggle_statusbar
+map [normal] ct toggle_statusbar
+map [normal] cp toggle_page_mode
+
+map [normal] q focus_inputbar ":blist "
+map [normal] <C-l> focus_inputbar ":blist "
+
+map [normal] d abort
+map [normal] bm focus_inputbar ":bmark "
+map [normal] bd focus_inputbar ":bdelete "

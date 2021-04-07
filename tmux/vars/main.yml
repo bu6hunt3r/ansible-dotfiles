@@ -1,4 +1,4 @@
 ---
-# vars file for zathura
+# vars file for tmux
 local_home: "{{ lookup('env', 'HOME') }}"
 local_user: "{{ lookup('env', 'USER') }}"

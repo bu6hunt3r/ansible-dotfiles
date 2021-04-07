@@ -20,3 +20,6 @@ test:
 	fi
 
 	cd ./${ROLE} && molecule test --parallel
+
+deploy:
+	ansible-playbook -i hosts -e ansible_python_interpreter=/usr/bin/python3 --ask-become-pass ./dev-env.yml

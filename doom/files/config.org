@@ -1,0 +1,241 @@
+#+TITLE: Config
+#+TODO: ACTIVE | INACTIVE
+* ACTIVE Lexical binding
+#+begin_src emacs-lisp
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+end_src
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+;; are the three important ones:
+;;
+;; + `doom-font'
+;; + `doom-variable-pitch-font'
+;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;;
+;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+;; font string. You generally only need these two:
+;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-one)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+
+* INACTIVE Set org directory
+
+#+begin_src emacs-lisp
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+;; (setq org-directory "~/org/")
+#+end_src
+* INACTIVE Set org-default-notes-file
+#+begin_src emacs-lisp
+;; (setq org-default-notes-file "~/Dropbox/Dokumente/Orgzly/todo.org")
+#+end_src
+* ACTIVE Enable line numbering
+
+#+begin_src emacs-lisp
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type 'relative)
+#+end_src
+
+* ACTIVE Set font and theme
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "IBM 3270" :size 16)
+      doom-variable-pitch-font (font-spec :family "IBM 3270" :size 16)
+      )
+
+(setq doom-theme 'doom-outrun-electric)
+
+;;(load-theme 'tron-legacy t)
+
+(custom-set-faces
+  '(default ((t (:background "#0a0f14")))))
+
+;; (custom-set-faces!
+;;   '(doom-modeline-buffer-modified :foreground "blue"))
+
+(setq doom-neotree-enable-variable-pitch nil)
+
+(nyan-mode +1)
+#+end_src
+
+* INACTIVE Rust racer settings
+
+#+begin_src emacs-lisp
+;; (setq racer-rust-src-path "~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src")
+#+end_src
+
+* INACTIVE Set org-agenda path
+
+#+begin_src emacs-lisp
+;; (setq org-agenda-files (quote ("~/Dropbox/Dokumente/Orgzly/todo.org")))
+#+end_src
+
+* ACTIVE Enable org-superstar-mode
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+#+END_SRC
+
+* INACTIVE Org-roam settings
+
+#+begin_src emacs-lisp
+;; (setq org-roam-directory "~/org/brain/roam")
+;; (setq org-roam-db-location "~/org/brain/roam/org-roam.db")
+;; (require 'company-org-roam)
+;; (use-package company-org-roam
+;;   :when (featurep! :completion company)
+;;   :after org-roam
+;;   :config
+;;   (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
+#+end_src
+
+* INACTIVE Org-brain settings
+#+begin_src emacs-lisp
+;; (use-package! org-brain
+;;   :config
+;;   (setq org-brain-path "~/org/brain"))
+
+;; ;; ascii-art-to-unicode settings
+;; (defface aa2u-face '((t . nil))
+;;   "Face for aa2u box drawing characters")
+;; (advice-add #'aa2u-1c :filter-return
+;;       (lambda (str) (propertize str 'face 'aa2u-face)))
+;; (defun aa2u-org-brain-buffer ()
+;;   (let ((inhibit-read-only t))
+;;     (make-local-variable 'face-remapping-alist)
+;;     (add-to-list 'face-remapping-alist
+;;    '(aa2u-face . org-brain-wires))
+;;     (ignore-errors (aa2u (point-min) (point-max)))))
+;; (with-eval-after-load 'org-brain
+;;   (add-hook 'org-brain-after-visualize-hook #'aa2u-org-brain-buffer))
+
+#+end_src
+
+* INACTIVE Deft settings
+#+begin_src emacs-lisp
+;; (after! org
+;;   (use-package! deft
+;;     :config
+;;     (progn
+;;       (setq deft-recursive t)
+;;       (setq deft-use-filter-string-for-filename t)
+;;       (setq deft-default-extension "org")
+;;       (setq deft-directory "~/org/brain/roam/"))))
+#+end_src
+
+* INACTIVE Org capture
+#+begin_src emacs-lisp
+;; (setq! +org-capture-todo-file "~/Dropbox/Dokumente/Orgzly/todo.org")
+;; ;; (after! org
+;; ;;   (add-to-list 'org-capture-templates
+;; ;;       '(("R" "2Read" entry (file+headline +org-capture-todo-file "2Read")
+;; ;;          "* TODO %?"
+;; ;;          :prepend t :kill-buffer t))))
+;; (after! org
+;;   (setq org-capture-templates
+;;       '(("b" "Burocracy" entry (file+headline +org-capture-todo-file "Burocracy")
+;;          "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))" :empty-lines 1)
+;;         ("B" "Books" entry (file+headline +org-capture-todo-file "Books")
+;;          "* TODO %?" :empty-lines 1)
+;;         ("a" "Another" entry (file+headline +org-capture-todo-file "Another")
+;;          "* TODO %?" :empty-lines 1)
+;;         ("R" "2Read" entry (file+headline +org-capture-todo-file "2Read")
+;;          "* TODO %?" :empty-lines 1)
+;;         ("l" "Learn" entry (file+headline +org-capture-todo-file "Learn")
+;;          "* TODO %?" :empty-lines 1)
+;;         ("r" "reply" entry (file+headline org-default-notes-file "Mails to reply to")
+;;          "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n" :empty-lines 1))))
+#+end_src
+* ACTIVE highlight-indent-guides
+#+begin_src emacs-lisp
+(use-package highlight-indent-guides
+  :hook (prog-mode . highlight-indent-guides-mode))
+
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-method 'character))
+
+
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-responsive t))
+
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-character ?\┆))
+
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-auto-enabled 'top)
+  (set-face-attribute 'highlight-indent-guides-odd-face nil :inherit 'highlight-indentation-odd-face)
+  (set-face-attribute 'highlight-indent-guides-even-face nil :inherit 'highlight-indentation-even-face)
+  (set-face-foreground 'highlight-indent-guides-character-face (doom-color 'base5)))
+#+end_src
+* ACTIVE Scratch buffer
+
+Make scratchbuffer inherit the major mode of current buffer
+#+begin_src emacs-lisp
+(setq doom-scratch-buffer-major-mode t)
+#+end_src
+
+* INACTIVE mu4e icons
+#+begin_src emacs-lisp
+;; (after! mu4e
+;;   (setq mu4e-use-fancy-chars t)
+;;   (setq mu4e-headers-has-child-prefix '("+" . "◼")
+;;         mu4e-headers-empty-parent-prefix '("-" ."◽")
+;;         mu4e-headers-first-child-prefix '("\\" . "↳")
+;;         mu4e-headers-duplicate-prefix '("=" . "⚌")
+;;         mu4e-headers-default-prefix '("|" . "┃")
+;;         mu4e-headers-draft-mark '("D" . "📝 ")
+;;         mu4e-headers-flagged-mark '("F" . "🏴 ")
+;;         mu4e-headers-new-mark '("N" . "★ ")
+;;         mu4e-headers-passed-mark '("P" . "→ ")
+;;         mu4e-headers-replied-mark '("R" . "← ")
+;;         mu4e-headers-seen-mark '("S" . "✓ ")
+;;         mu4e-headers-trashed-mark '("T" . "✗ ")
+;;         mu4e-headers-attach-mark '("a" . "📎 ")
+;;         mu4e-headers-encrypted-mark '("x" . "🔐 ")
+;;         mu4e-headers-signed-mark '("s" . "🔏 ")
+;;         mu4e-headers-unread-mark '("u" . "✉ ")))
+#+end_src
+
+* ACTIVE hideshow
+#+begin_src emacs-lisp
+(setq hs-special-modes-alist
+      (append
+           '((prog-mode "{{{" "}}}" "\"")
+             (yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>"
+                        ""
+                        "#"
+                        +hideshow-forward-block-by-indent nil)
+             (ruby-mode "class\\|d\\(?:ef\\|o\\)\\|module\\|[[{]"
+                        "end\\|[]}]"
+                        "#\\|=begin"
+                        ruby-forward-sexp)
+             (enh-ruby-mode "class\\|d\\(?:ef\\|o\\)\\|module\\|[[{]"
+                            "end\\|[]}]"
+                            "#\\|=begin"
+                            enh-ruby-forward-sexp nil))
+           hs-special-modes-alist
+           '((t))))
+#+end_src
+* INACTIVE ui/dashboard
+#+begin_src emacs-lisp
+(setq +doom-dashboard-banner-file (expand-file-name "banners/doom.png" doom-private-dir))
+#+end_src
+* ACTIVE ui/modeline
+#+begin_src emacs-lisp
+  (setq doom-modeline-major-mode-color-icon t)
+  (setq doom-modeline-github t)
+#+end_src
+
+* INACTIVE Rust settings
+#+begin_src emacs-lisp
+;; (setq exec-path (append exec-path '("~/.cargo/bin")))
+#+end_src
+

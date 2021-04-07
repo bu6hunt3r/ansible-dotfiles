@@ -32,7 +32,7 @@
     state: latest
   with_items:
     - bat
-    - fd 
+    - fd-find 
   become: yes
   become_method: sudo
 

@@ -1,2 +1,21 @@
 ---
+- name: Install zathura
+  package:
+    name: zathura
+  become: yes
+  become_method: sudo
+
+- name: Create zathura config dir
+  file:
+    state: directory
+    path: "{{ local_home }}/.config/zathura"
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+    mode: 0755
+
 # tasks file for zathura
+- name: Copy zathurarc
+  copy:
+    src: zathurarc 
+    dest: "{{ local_home }}/.config/zathura/zathurarc"
+ 

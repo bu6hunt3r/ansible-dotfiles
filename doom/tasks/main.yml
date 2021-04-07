@@ -1,0 +1,37 @@
+---
+# tasks file for doom
+
+- name: Create doom config dir
+  file:
+    path: "{{ local_home }}/.doom.d"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+
+- name: copy init.el
+  copy:
+    src: init.el
+    dest: "{{ local_home }}/.doom.d/init.el"
+
+- name: copy packages.el
+  copy:
+    src: packages.el
+    dest: "{{ local_home }}/.doom.d/packages.el"
+
+- name: Create doom banners dir
+  file:
+    path: "{{ local_home }}/.doom.d/banners"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: copy doom.png
+  copy:
+    src: doom.png
+    dest: "{{ local_home }}/.doom.d/banners/doom.png"
+
+- name: copy config.org
+  copy:
+    src: config.org
+    dest: "{{ local_home }}/.doom.d/config.org"

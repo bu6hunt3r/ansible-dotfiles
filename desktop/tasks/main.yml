@@ -1,0 +1,232 @@
+---
+# tasks file for desktop
+- name: Install cmake 
+  package:
+    name: cmake 
+  become: true
+  become_method: sudo
+
+- name: Install dmenu 
+  package:
+    name: suckless-tools 
+  become: true
+  become_method: sudo
+
+- name: Clone j4-dmenu-desktop temporarily 
+  git:
+    repo: https://github.com/enkore/j4-dmenu-desktop 
+    dest: /tmp/j4-dmenu-desktop
+
+- name: Compiling j4-dmenu-desktop with cmake
+  shell: |
+    cd /tmp/j4-dmenu-desktop && cmake .
+
+- name: Compiling j4-dmenu-desktop with make
+  shell: |
+    cd /tmp/j4-dmenu-desktop && make
+
+- name: Install j4-dmenu-desktop 
+  shell: |
+    cd /tmp/j4-dmenu-desktop && make install
+  become_method: sudo
+  become: true
+
+- name: Remove temporary dir
+  file:
+    path: /tmp/j4-dmenu-desktop
+    state: absent
+
+- name: Install i3-gaps
+  package:
+    name: i3-gaps
+  become: true
+  become_method: sudo
+
+- name: Install rofi
+  package:
+    name: rofi 
+  become: true
+  become_method: sudo
+
+- name: Install fonts-hack 
+  package:
+    name: fonts-hack-ttf 
+  become: true
+  become_method: sudo
+
+- name: Install zenity 
+  package:
+    name: zenity
+  become: true
+  become_method: sudo
+
+- name: Install xbacklight 
+  package:
+    name: xbacklight
+  become: true
+  become_method: sudo
+
+- name: Install dunst 
+  package:
+    name: dunst
+  become: true
+  become_method: sudo
+
+- name: Install polybar 
+  package:
+    name: polybar
+  become: true
+  become_method: sudo
+
+- name: Create i3-config dir
+  file:
+    path: "{{ local_home }}/.config/i3"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Create scripts dir
+  file:
+    path: "{{ local_home }}/scripts"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Copy lock-screen.sh
+  copy:
+    src: lock-screen.sh
+    dest: "{{ local_home }}/scripts/lock-screen.sh"
+    mode: a+x
+
+- name: Copy rofi.sh
+  copy:
+    src: rofi.sh
+    dest: "{{ local_home }}/scripts/rofi.sh"
+    mode: a+x
+
+- name: Create dunst config dir
+  file:
+    path: "{{ local_home }}/.config/dunst/"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Copy dunstrc
+  copy:
+    src: dunstrc 
+    dest: "{{ local_home }}/.config/dunst/dunstrc"
+
+- name: Copy dunstrc
+  copy:
+    src: i3config
+    dest: "{{ local_home }}/.config/i3/config"
+
+- name: Create rofi config dir
+  file:
+    path: "{{ local_home }}/.config/rofi"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Copy config.rasi 
+  copy:
+    src: config.rasi 
+    dest: "{{ local_home }}/.config/rofi/config.rasi"
+
+
+- name: Create polybar config dir
+  file:
+    path: "{{ local_home }}/.config/i3/polybar"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Copy launchPolybar.sh 
+  copy:
+    src: launchPolybar.sh 
+    dest: "{{ local_home }}/.config/i3/polybar/launchPolybar.sh"
+    mode: a+x
+
+- name: Install noto fonts
+  package:
+    name: fonts-noto
+  become: true
+  become_method: sudo
+
+- name: Install fonts-font-awesome 
+  package:
+    name: fonts-font-awesome
+  become: true
+  become_method: sudo
+
+- name: Copy polybar config 
+  copy:
+    src: polybarconfig
+    dest: "{{ local_home }}/.config/i3/polybar/config"
+
+- name: Install feh
+  package:
+    name: feh 
+  become: true
+  become_method: sudo
+
+- name: Copy wallpaper 
+  copy:
+    src: "{{ item }}.jpg"
+    dest: "{{ local_home }}/.config/{{ item }}.jpg"
+  with_items:
+    - pony
+    - darkwing
+
+- name: Install Bitstream Vera Sans font
+  package:
+    name: ttf-bitstream-vera
+  become: true
+  become_method: sudo
+
+- name: Install San Francisco fonts
+  copy:
+    src: "fonts/{{ item }}.ttf"
+    dest: "{{ local_home }}/.fonts/"
+  with_items:
+    - System San Francisco Display Bold
+    - System San Francisco Display Regular
+    - System San Francisco Display Thin
+    - System San Francisco Display Ultralight
+
+- name: Update font cache
+  shell: fc-cache -fv
+
+- name: Install py3status
+  package:
+    name: py3status
+  become: true
+  become_method: sudo
+
+- name: Copy i3status config
+  copy:
+    src: i3status.conf
+    dest: "{{ local_home }}/.i3status.conf"
+
+- name: Install scrot
+  package:
+    name: scrot
+  become: true
+  become_method: sudo
+
+- name: Install compton
+  package:
+    name: compton
+  become: true
+  become_method: sudo
+
+- name: Creeate compton config directory
+  file:
+    state: directory
+    path: "{{ local_home }}/.config/compton"
+    mode: 0755
+
+- name: Copy compton config
+  copy:
+    dest: "{{ local_home }}/.config/compton/compton.conf"
+    src: compton.conf

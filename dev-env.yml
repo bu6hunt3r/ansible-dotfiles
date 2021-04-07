@@ -4,7 +4,13 @@
 - name: set up dev env
   hosts: all
   roles:
-    - {role: fzf, tags: ['fzf']}
-    - {role: git, tags: ['git']}
-    - {role: spotifyd, tags: ['spotifyd']}
-    - {role: ranger, tags: ['ranger']}
+    # - {role: fzf, tags: ['fzf']}
+    # - {role: git, tags: ['git']}
+    # - {role: spotifyd, tags: ['spotifyd']}
+    # - {role: ranger, tags: ['ranger']}
+    # - {role: shell, tags: ['shell']}
+    # - {role: tmux, tags: ['tmux']}
+    - {role: desktop, tags: ['desktop']}
+    # - {role: zathura, tags: ['zathura']}
+    # - {role: doom, tags: ['doom']}
+    

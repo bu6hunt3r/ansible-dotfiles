@@ -1,0 +1,85 @@
+---
+# tasks file for shell
+- name: Install urxvt
+  package:
+    name: rxvt-unicode
+  become: true 
+  become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install tree 
+  package:
+    name: tree 
+  become: true 
+  become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Copying .Xdefaults
+  copy:
+    src: .Xdefaults
+    dest: "{{ local_home }}/.Xdefaults"
+  
+- name: Installing ibm3270 fonts
+  package: 
+    name: fonts-3270
+  become: true 
+  become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Copy .zbindkeys
+  copy:
+    src: .zbindkeys
+    dest: "{{ local_home }}/.zbindkeys"
+
+- name: Install antibody
+  shell: curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
+  become: true 
+  become_method: sudo
+
+- name: Copy .zsh_plugins
+  copy:
+    src: .zsh_plugins
+    dest: "{{ local_home }}/.zsh_plugins"
+
+- name: Install xclip
+  package:
+    name: xclip
+  become: true 
+  become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install grc 
+  package:
+    name: grc
+  become: true 
+  become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install colordiff 
+  package:
+    name: colordiff
+  become: true 
+  become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Create urxvt ext modules dir
+  file:
+    path: "{{ local_home }}/.urxvt/ext"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+    mode: 0775
+
+- name: Copy urxvt modules
+  copy:
+    src: ".urxvt/ext/{{ item }}"
+    dest: "{{ local_home }}/.urxvt/ext/{{ item }}"
+    mode: a+x
+  with_items:
+    - clipboard
+    - resize-font
+
+- name: Copy zshrc
+  copy:
+    src: zshrc
+    dest: "{{ local_home }}/.zshrc"
