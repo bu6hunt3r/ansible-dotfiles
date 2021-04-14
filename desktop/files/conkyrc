@@ -1,0 +1,48 @@
+conky.config = {
+	update_interval = 1,
+	total_run_times = 0,
+	net_avg_samples = 1,
+	cpu_avg_samples = 1,
+	imlib_cache_size = 0,
+	double_buffer = true,
+	no_buffers = true,
+	use_xft = true,
+	font = 'ibm3270:size=9',
+	override_utf8_locale = true,
+	text_buffer_size = 2048,
+	border_inner_margin = 10,
+
+	background = true,
+        own_window = true,
+        own_window_type = 'override',
+        own_window_transparent = true,
+        own_window_hints = 'undecorated,below,skip_taskbar,skip_pager,sticky',
+        own_window_colour = '000000',
+        own_window_class = 'Conky',
+
+        minimum_width = 300, minimum_height = 0,-- width | height
+        maximum_width = 500,
+
+        gap_x = 50,-- left | right
+        gap_y = 60,-- up | down
+
+        alignment = 'top_right',
+
+	draw_shades = false,
+        color0 = '#ffffff',
+	color1 = '#ffffff',
+	color2 = '#ffffff',
+
+        lua_load = '~/.conky/conky_molecules/lsd/rings.lua',
+	lua_draw_hook_pre = 'ring_stats',
+
+};
+
+conky.text = [[
+${voffset -12}${goto 218}${color0}${font ibm3270:style=regular:size=16}${exec id -un}
+${voffset 130}${goto 28}${color3}${font ibm3270:style=regular:size=30}${time %H:%M}${color}${goto 0}${voffset 30}${font ibm3270:style=bold:size=11}${color slate grey}${time %a}${color}, ${time %e %b %G}
+${goto 216}${voffset 20}${font ibm3270:style=bold:size=7}CPU 0${goto 216}${voffset 9}${font ibm3270:style=bold:size=7}CPU 1
+${goto 168}${voffset 68}${font ibm3270:style=bold:size=7}${color1}HOME${goto 168}${voffset 9}${font ibm3270:style=bold:size=7}${color1}ROOT${goto 65}UP${goto 65}${voffset -9}DOWN${goto 116}${voffset 75}RAM
+
+${image ~/.conky/conky_molecules/lsd/lsd.png -p 0,0 -s 303x500}
+]];

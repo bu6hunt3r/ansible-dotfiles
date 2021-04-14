@@ -11,30 +11,51 @@
     name: suckless-tools 
   become: true
   become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install dmenu
+  package:
+    name: dmenu
+  become: true
+  become_method: sudo
+  when: ansible_os_family == "Archlinux"
 
 - name: Clone j4-dmenu-desktop temporarily 
   git:
     repo: https://github.com/enkore/j4-dmenu-desktop 
     dest: /tmp/j4-dmenu-desktop
+  when: ansible_os_family == "Debian"
 
 - name: Compiling j4-dmenu-desktop with cmake
   shell: |
     cd /tmp/j4-dmenu-desktop && cmake .
+  when: ansible_os_family == "Debian"
 
 - name: Compiling j4-dmenu-desktop with make
   shell: |
     cd /tmp/j4-dmenu-desktop && make
+  when: ansible_os_family == "Debian"
 
 - name: Install j4-dmenu-desktop 
   shell: |
     cd /tmp/j4-dmenu-desktop && make install
   become_method: sudo
   become: true
+  when: ansible_os_family == "Debian"
+
 
 - name: Remove temporary dir
   file:
     path: /tmp/j4-dmenu-desktop
     state: absent
+  when: ansible_os_family == "Debian"
+
+- name: Install j4-dmenu-desktop
+  aur:
+    name: j4-dmenu-desktop
+  become_user: aur_builder
+  when: ansible_os_family == "Archlinux"
+
 
 - name: Install i3-gaps
   package:
@@ -53,6 +74,14 @@
     name: fonts-hack-ttf 
   become: true
   become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install fonts-hack
+  package:
+    name: ttf-hack
+  become: true
+  become_method: sudo
+  when: ansible_os_family == "Archlinux"
 
 - name: Install zenity 
   package:
@@ -65,6 +94,14 @@
     name: xbacklight
   become: true
   become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install xbacklight
+  package:
+    name: acpilight
+  become: true
+  become_method: sudo
+  when: ansible_os_family == "Archlinux"
 
 - name: Install dunst 
   package:
@@ -152,12 +189,28 @@
     name: fonts-noto
   become: true
   become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install noto fonts
+  package:
+    name: noto-fonts
+  become: true
+  become_method: sudo
+  when: ansible_os_family == "Archlinux"
 
 - name: Install fonts-font-awesome 
   package:
     name: fonts-font-awesome
   become: true
   become_method: sudo
+  when: ansible_os_family == "Debian"
+
+- name: Install fonts-font-awesome
+  package:
+    name: ttf-font-awesome
+  become: true
+  become_method: sudo
+  when: ansible_os_family == "Archlinux"
 
 - name: Copy polybar config 
   copy:
@@ -230,3 +283,18 @@
   copy:
     dest: "{{ local_home }}/.config/compton/compton.conf"
     src: compton.conf
+
+- name: Install alttab-git
+  aur:
+    name: alttab-git
+  when: ansible_os_family == "Archlinux"
+
+- name: Copy conky config (conky_molecules)
+  copy:
+    src: conky_molecules
+    dest: "{{ local_home }}/.config/conky/conky_molecules"
+
+- name: Copy conky config
+  copy:
+    src: conkyrc
+    dest: "{{ local_home }}/.conkyrc"
