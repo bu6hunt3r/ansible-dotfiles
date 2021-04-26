@@ -25,6 +25,18 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
+* ACTIVE Set username and mail address
+#+begin_src emacs-lisp
+(let ((default-directory "~/.doom.d/"))
+  (setq private-config-file
+        (expand-file-name "private.el.gpg"))
+  (epa-decrypt-file private-config-file "private.el")
+  (load-file "private.el")
+  (delete-file "private.el"))
+
+(setq user-full-name my/username)
+(setq user-mail-address my/user-mail-address)
+#+end_src
 
 * INACTIVE Set org directory
 

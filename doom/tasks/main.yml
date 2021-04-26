@@ -35,3 +35,8 @@
   copy:
     src: config.org
     dest: "{{ local_home }}/.doom.d/config.org"
+
+- name: copy private.el.gpg
+  copy:
+    src: config.org
+    dest: "{{ local_home }}/.doom.d/private.el.gpg"

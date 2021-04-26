@@ -10,7 +10,7 @@
     # - {role: ranger, tags: ['ranger']}
     # - {role: shell, tags: ['shell']}
     # - {role: tmux, tags: ['tmux']}
-    - {role: desktop, tags: ['desktop']}
+    # - {role: desktop, tags: ['desktop']}
     # - {role: zathura, tags: ['zathura']}
-    # - {role: doom, tags: ['doom']}
-    
+    - {role: doom, tags: ['doom']}
+    # - {role: mbsync, tags: ['mbsync']}

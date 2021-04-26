@@ -83,3 +83,13 @@
   copy:
     src: zshrc
     dest: "{{ local_home }}/.zshrc"
+
+- name: Copy zprofile
+  copy:
+    src: zprofile
+    dest: "{{ local_home }}/.zprofile"
+
+- name: Copy zshenv
+  copy:
+    src: zshenv
+    dest: "{{ local_home }}/.zshenv"

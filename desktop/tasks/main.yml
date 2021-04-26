@@ -298,3 +298,15 @@
   copy:
     src: conkyrc
     dest: "{{ local_home }}/.conkyrc"
+
+- name: Create py3tatus module dir
+  file:
+    path: "{{ local_home }}/.config/py3status/modules"
+    state: directory
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Copy playerctl module for py3status
+  copy:
+    src: playerctl.py
+    dest: "{{ local_home }}/.config/py3status/modules/playerctl.py"

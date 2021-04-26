@@ -1,0 +1,32 @@
+---
+# tasks file for mbsync
+- name: Install mbsync
+  aur:
+    name: mbsync-git
+  become_user: aur_builder
+
+- name: Create mail dir
+  file:
+    state: directory
+    path: "{{ local_home }}/mail"
+    mode: 0755
+    owner: "{{ local_user }}"
+    group: "{{ local_user }}"
+
+- name: Copy mbsync daemon config
+  copy:
+    src: mbsync.service
+    dest: "{{ local_home }}/.config/systemd/user/mbsync.service"
+
+- name: Copy mbsync timer config
+  copy:
+    src: mbsync.timer
+    dest: "{{ local_home }}/.config/systemd/user/mbsync.timer"
+
+- name: Enable mbsync.timer
+  shell: systemctl --user enable mbsync.timer
+
+- name: Install mu
+  aur:
+    name: mu
+  become_user: aur_builder
